@@ -24,6 +24,7 @@ Maze-finder#maze_create(return a matrix with the maze in it)
   or if it the has a "*"
 
 #find-end (starting from the start index work through the maze until the end)
+  Look at each space next to the blank ones ie. [i, i -1] and [i, i + 1]
 #print_maze (print the maze to the terminal)
  
 
