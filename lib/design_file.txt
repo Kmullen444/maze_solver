@@ -1,0 +1,29 @@
+Write a prpogram that will find a route between tow points in a maze
+
+
+Need to get the maze from the file
+  Put the maze in a matix
+  Find the start point(maybe hardcode)
+  Path should not be self-intersecting
+  Work throught the maze checking if the side has either blank 
+    or if it the has a "*"
+    if it doesn't put a block in
+      if it does do nothing
+  Print the maze to the terminal
+
+  Need to get the maze from the file
+  Put the maze in a matix
+
+Maze-finder class
+Maze-finder#maze_create(return a matrix with the maze in it)
+#find-start(index of "S")
+#find-end  (index of "E")
+
+
+  Work throught the maze checking if the side has either blank 
+  or if it the has a "*"
+
+#find-end (starting from the start index work through the maze until the end)
+#print_maze (print the maze to the terminal)
+ 
+
