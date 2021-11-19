@@ -16,15 +16,11 @@ Need to get the maze from the file
 
 Maze-finder class
 Maze-finder#maze_create(return a matrix with the maze in it)
-#find-start(index of "S")
-#find-end  (index of "E")
-
-
-  Work throught the maze checking if the side has either blank 
-  or if it the has a "*"
-
-#find-end (starting from the start index work through the maze until the end)
-  Look at each space next to the blank ones ie. [i, i -1] and [i, i + 1]
+#find_start(index of "S")
+#find_end  (index of "E")
+#find_wall
+#path(iterate throught the maze, "riding the wall"
 #print_maze (print the maze to the terminal)
+
  
 
