@@ -21,10 +21,19 @@ class TestMaze < Minitest::Test
   end
 
   def test_is_wall?
-    assert @test_maze.is_wall?([0,0])
+    assert true,  @test_maze.is_wall?(7,1)
   end
 
-  def test_path
+  def test_wall_indices
+    test_indices = [[7,15], [7,0], [0,0], [0,15]]
+    assert true, @test_maze.wall_indices
+                              .all? { |idx| test_indices.include?(idx) }
+  end
+
+  def test_possible_path
+    test_indices = [[7,15], [7,0], [0,0], [0,15]]
+    assert true, @test_maze.possible_path
+                              .none? { |idx| test_indices.include?(idx) }
 
   end
 

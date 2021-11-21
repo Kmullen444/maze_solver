@@ -19,7 +19,8 @@ Maze-finder#maze_create(return a matrix with the maze in it)
 #find_start(index of "S")
 #find_end  (index of "E")
 #find_wall
-#path(iterate throught the maze, "riding the wall"
+#wall_indices
+#path(iterate throught the maze, "riding the wall")
 #print_maze (print the maze to the terminal)
 
  
