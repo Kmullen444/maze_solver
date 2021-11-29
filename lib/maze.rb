@@ -1,4 +1,5 @@
 class Maze
+
    @@deltas = [[1,0], [0,1], [-1,0], [0, -1]].freeze
   
   def self.from_file(file)
