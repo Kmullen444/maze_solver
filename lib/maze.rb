@@ -1,127 +1,81 @@
 class Maze
 
-   @@deltas = [[1,0], [0,1], [-1,0], [0, -1]].freeze
-  
-  def self.from_file(file)
-    File.readlines(file).map do |line|
-      line.chomp.split("")
+  DELTAS = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+
+  attr_reader :start_point, :end_point
+
+  def self.maze_maker(file)
+    File. readlines(file).map do |lines|
+      lines.chomp.split("")
     end
   end
 
-  attr_reader :start_point, :end_point, :maze
-
-  def initialize(file)
-    @maze        = Maze.from_file(file)
-    @start_point = find_start 
-    @end_point   = find_end 
+  def initialize(maze = "maze1.txt")
+    @maze        = Maze.maze_maker(maze)
+    @start_point = find_start
+    @end_point   = find_end
   end
 
   def find_start
     find_letter("S")
   end
-  
+
   def find_end
     find_letter("E")
   end
 
   def find_letter(letter)
-    indices = []
-    maze.each_with_index do |line, idx1|
+    @maze.each_with_index do |line, idx1|
       line.each_with_index do |ele, idx2|
-        if ele == letter
-          indices << idx1 
-          indices << idx2
-        end
+        return [idx1, idx2] if ele == letter
       end
     end
-    indices
   end
 
-  def is_wall?(row, col)
+  def show_maze(maze)
+    maze.each do |line|
+      p line.join
+    end
+  end
+
+  def wall?(row, col)
     @maze[row][col] == "*"
   end
-  
-  def neighbors(pos)
-    row, col = pos
+
+  def neighbors(position)
     neighbors = []
-    @@deltas.each do |d_x,d_y| 
-      neighbor = [( d_x + row ) ,( d_y + col )] 
-      neighbors << neighbor if !is_wall?(neighbor.first, neighbor.last)
+    p_y, p_x = position
+    DELTAS.each do |coords|
+      d_y, d_x = coords
+      neighbors << [(d_y + p_y), (d_x + p_x)] if !wall?((d_y + p_y), (d_x + p_x))
     end
     neighbors
   end
 
   def path
-   position = @start_point
-   been_there = [@start_point]
-   possible_path = [] 
+    position = start_point
+    copy_maze = @maze.dup
+    been_there = []
 
-   until position == @end_point
-     pos_neighbors = neighbors(position)
+    until position == end_point
+      pos_dir = neighbors(position)
 
-     pos_neighbors.each do |coords|
-       row, col = coords
-
-      if !been_there.include?(coords)
-
-        if @maze[row][col] == " "
-          possible_path << coords
+      pos_dir.each do |coords|
+        if !been_there.include?(coords)
+          been_there << coords
+          position = coords
+          copy_maze[coords.first][coords.last] = "X"
+          break
         end
-
-        been_there << coords
-        position = coords
       end
     end
-   end
-   possible_path
-  end
-
-  def make_path(path)
-    copy_maze = @maze.dup
-
-    path.each do |coords|
-      row, col = coords
-      copy_maze[row][col] = "X"
-    end
-
     copy_maze
   end
 
-
-  def show_maze(maze = self.make_path(path))
-    maze.each do |line|
-      puts line.join("")
-    end
-  end
-
-  def distance(pos)
-    row, col = pos
-    end_row, end_col = @end_point
-    ((row - end_row) + (col - end_col)).abs
-  end
-
-  def distance_for_path(path)
-    distance_of_path = Hash.new { |k,v| hash[k] = v } 
-
-    path.each do |coords|
-      distance_of_path[coords] = distance(coords) 
-    end
-    distance_of_path
-  end
-
-  def choose_path
-    distances = distance_for_path(self.path) 
-    pos_path = []
-
-    distances.value 
-  end
-
-end
-
-
+end 
 
 
 if $PROGRAM_NAME == __FILE__
-  maze = Maze.new("maze1.txt")
-  maze.show_maze
+  maze = Maze.new
+  maze.show_maze(maze.path)
 end
